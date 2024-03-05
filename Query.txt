@@ -1,0 +1,6 @@
+**** ---- ทะเบียนอุปกรณ์แสดงจำนวนของแต่ละอุปกรณ์  --- ***
+SELECT list_id,agency_name,equipment_name,active_amount,inactive_amount,already_amount,SUM(active_amount+inactive_amount+already_amount) as "Total" FROM EquipmentList NATURAL JOIN Equipment NATURAL JOIN Agency GROUP BY list_id
+**** ---- ค้นหาอุปกรณ์ในหน่วยงานต่างๆ  ---- ****
+SELECT list_id,agency_name,equipment_name,active_amount,inactive_amount,already_amount,SUM(active_amount+inactive_amount+already_amount) as 'Total' FROM EquipmentList NATURAL JOIN Agency NATURAL JOIN Equipment WHERE list_id LIKE '%$key%' OR agency_name LIKE '%$key%' OR equipment_name LIKE '%$key%' GROUP BY list_id
+****----- หน้าสรุป//Summary----------****
+SELECT agency_name,equipment_name,active_amount,inactive_amount,already_amount,(active_amount+inactive_amount+already_amount) AS "Total" FROM EquipmentList as el INNER JOIN Equipment as e ON el.equipment_id=e.equipment_id INNER JOIN Agency as a ON el.agency_id=a.agency_id ORDER BY agency_name
